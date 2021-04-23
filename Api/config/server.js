@@ -1,11 +1,13 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var consign = require('consign');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
+const consign = require('consign');
 consign().include('./config/connectionDB.js')
     .then('./controllers')
     .then('./routes')
-    .into(app)
+    .into(app);
 
 module.exports = app;
