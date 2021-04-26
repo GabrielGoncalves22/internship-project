@@ -1,6 +1,6 @@
 module.exports = (app) => {
     
-    const getRegisters = async (req, res, next) => {
+    const getRegisters = async (req, res) => {
         try {
             const query = "Select * from register";
             const result = await app.config.connectionDB(query);
@@ -11,11 +11,11 @@ module.exports = (app) => {
         }
     };
 
-    const postRegister = async (req, res, next) => {
+    const postRegister = async (req, res) => {
         try {
 
             const query = "Insert into register (employeeId, dateRegister, typeRegisterId) values (?, ?, ?)";
-            const result = app.config.connectionDB(query, [req.body.employeeId, new Date(), req.body.typeRegisterId]);
+            const result = app.config.connectionDB(query, [req.user.employeeId, new Date(), req.body.typeRegisterId]);
             
             return res.status(201).send("Registo inserido com sucesso!");
                        
