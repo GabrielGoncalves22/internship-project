@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
 
     const getEmployees = async (req, res) => {
         try {
-            const query = "Select * from employee";
+            const query = "Select employeeId, name, email from employee";
             const result = await app.config.connectionDB(query);
 
             return res.status(200).send(result);
@@ -39,7 +39,7 @@ module.exports = (app) => {
         try {
 
             if (!req.body.email || !req.body.password) {
-                return res.status(400).send('Dados incompletos!')
+                return res.status(400).send('Dados incompletos!');
             } else {
                 const query = "Select * from employee where email = ?";
                 const result = await app.config.connectionDB(query, [req.body.email.toLowerCase()]);
@@ -48,17 +48,17 @@ module.exports = (app) => {
                     if (await bcrypt.compare(req.body.password, result[0].password)) {
                         const payload = {
                             employeeId: result[0].employeeId, 
-                        }
+                        };
 
                         const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: 300 });
 
-                        return res.status(200).send({message: 'Login efetuado com sucesso!', token: token})
+                        return res.status(200).send({message: 'Login efetuado com sucesso!', token: token});
 
                     } else {
-                        return res.status(401).send('A palavra-passe encontra-se inválida!')
+                        return res.status(401).send('A palavra-passe encontra-se inválida!');
                     }
                 } else {
-                    return res.status(401).send('Dados inválidos!')                   
+                    return res.status(401).send('Dados inválidos!');                   
                 }
             }
         } catch (error) {

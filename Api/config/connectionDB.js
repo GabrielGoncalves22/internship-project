@@ -12,7 +12,7 @@ const execute = (query, params = []) => {
     return new Promise((resolve, reject) => {
         connection.query(query, params, (error, result, fields) => {
             if (error) {
-                reject(error);
+                reject("Ocorreu um erro, por favor tente mais tarde!");
             } else {
                 resolve(result);
             }
