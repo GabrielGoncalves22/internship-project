@@ -2,7 +2,7 @@ module.exports = (app) => {
     
     const getAttendances = async (req, res) => {
         try {
-            const query = "Select * from attendance where employeeId = ? order by dateAttendance desc";
+            const query = "Select attendanceId, dateAttendance, typeAttendanceId from attendance where employeeId = ? order by dateAttendance desc";
             const result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
@@ -16,18 +16,18 @@ module.exports = (app) => {
 
             let query = "Select typeAttendanceId from attendance where employeeId = ? order by dateAttendance desc Limit 1";
             let result = await app.config.connectionDB(query, [req.user.employeeId]);
-            let nextTypeRegisterId;
+            let nextTypeAttendanceId;
 
-            if (result.length > 0 && result[0].typeRegisterId === 1) {
-                nextTypeRegisterId = 2;
+            if (result.length > 0 && result[0].typeAttendanceId === 1) {
+                nextTypeAttendanceId = 2;
             } else {
-                nextTypeRegisterId = 1;
+                nextTypeAttendanceId = 1;
             }
 
             query = "Insert into attendance (employeeId, dateAttendance, typeAttendanceId) values (?, ?, ?)";
-            result = app.config.connectionDB(query, [req.user.employeeId, new Date(), nextTypeRegisterId]);
+            result = app.config.connectionDB(query, [req.user.employeeId, new Date(), nextTypeAttendanceId]);
             
-            return res.status(201).send("Presença inserida com sucesso!");
+            return res.status(201).send(`${nextTypeAttendanceId === 1 ? "Entrada" : "Saída"} registada com sucesso!`);
                        
         } catch (error) {
             return res.status(500).send(error);

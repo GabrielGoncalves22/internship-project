@@ -3,10 +3,21 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
 
-    const getEmployees = async (req, res) => {
+    const getAllEmployees = async (req, res) => {
         try {
-            const query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId";
-            const result = await app.config.connectionDB(query);
+            const query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId inner join entity on employee.entityId = entity.entityId where entity.entityId = ? order by employee.employeeId asc";
+            const result = await app.config.connectionDB(query, [req.user.entityId]);
+
+            return res.status(200).send(result);
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    };
+
+    const getEmployee = async (req, res) => {
+        try {
+            const query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId where employeeId = ?";
+            const result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
         } catch (error) {
@@ -32,7 +43,7 @@ module.exports = (app) => {
                     result = await app.config.connectionDB(query, [req.body.description, req.body.email.toLowerCase(), hash, new Date()]);
 
                     query = "Insert into employee (name, address, address2, postalCode, locality, telephone, mobilePhone, grades, entityId, userId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    result = await app.config.connectionDB(query, [req.body.name, req.body.address, req.body.address2, req.body.postalCode, req.body.locality, req.body.telephone, req.body.mobilePhone, req.body.grades, req.body.entityId, result.insertId]);
+                    result = await app.config.connectionDB(query, [req.body.name, req.body.address, req.body.address2, req.body.postalCode, req.body.locality, req.body.telephone, req.body.mobilePhone, req.body.grades, req.user.entityId, result.insertId]);
 
                     return res.status(201).send("Funcionário criado com sucesso!");
                 } 
@@ -61,7 +72,7 @@ module.exports = (app) => {
                             permission: result[0].permission                           
                         };
 
-                        const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: 300 });
+                        const token = jwt.sign(payload, process.env.JWT_KEY);
 
                         if (result[0].state) {
                             return res.status(200).send({message: 'Login efetuado com sucesso!', token: token});
@@ -79,7 +90,7 @@ module.exports = (app) => {
         } catch (error) {
             return res.status(500).send(error);
         }
-    }
+    };
 
-    return { getEmployees, postEmployee, loginEmployee }
+    return { getAllEmployees, getEmployee, postEmployee, loginEmployee }
 };

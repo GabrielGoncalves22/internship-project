@@ -8,8 +8,8 @@ Description varchar(255),
 Email varchar(100) unique not null,
 Password varchar(255) not null,
 CreationDate datetime not null,
-Permission bit default 0 not null,
-State bit default 1 not null
+Permission boolean default 0 not null,
+State boolean default 1 not null
 );
 
 Create table Entity (
@@ -74,7 +74,7 @@ Create table Schedule (
 ScheduleId int auto_increment primary key,
 EntityId int not null,
 Description varchar(255),
-LunchBreak bit not null,
+LunchBreak boolean not null,
 NormalHours int not null,
 foreign key (EntityId) references Entity (EntityId)
 );
