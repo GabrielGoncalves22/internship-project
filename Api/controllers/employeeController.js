@@ -45,7 +45,7 @@ module.exports = (app) => {
                     query = "Insert into employee (name, address, address2, postalCode, locality, telephone, mobilePhone, grades, entityId, userId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     result = await app.config.connectionDB(query, [req.body.name, req.body.address, req.body.address2, req.body.postalCode, req.body.locality, req.body.telephone, req.body.mobilePhone, req.body.grades, req.user.entityId, result.insertId]);
 
-                    return res.status(201).send("Funcionário criado com sucesso!");
+                    return res.status(201).send("Funcionário inserido com sucesso!");
                 } 
             }
            

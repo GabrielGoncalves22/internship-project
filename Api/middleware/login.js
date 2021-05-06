@@ -10,7 +10,7 @@ module.exports = () => {
             req.user = decode;
             next();
         } catch (error) {
-            return res.status(401).send({ mensagem: 'Falha na autenticação' });
+            return res.status(401).send("Falha na autenticação");
         }    
     };
 
@@ -25,13 +25,13 @@ module.exports = () => {
                 req.user = decode;
                 next();
             } else {
-                return res.status(401).send({ mensagem: 'Falha na autenticação' });
+                return res.status(401).send("Falha na autenticação");
             }
 
         } catch (error) {
-            return res.status(401).send({ mensagem: 'Falha na autenticação' });
+            return res.status(401).send("Falha na autenticação");
         }    
     };
 
-    return { required, requiredPermission };
+    return { required, requiredPermission }
 };
