@@ -1,12 +1,31 @@
-import React from 'react'
-import { View, TextInput } from 'react-native'
-import Icon from 'react-native-vector-icons'
+import React from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default props => {
     return (
-        <View>
+        <View style = {styles.container}>
             <Icon name = {props.icon}/>
             <TextInput {...props}/>
         </View>
     )
-}
+};
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#EEE',
+        borderRadius: 20,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    icon: {
+        color: '#333',
+        marginLeft: 20
+    },
+    input: {
+        marginLeft: 20,
+        width: '90%'
+    }
+});

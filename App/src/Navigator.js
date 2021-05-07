@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from './screens/Login'
-import AttendanceRegister from './screens/AttendanceRegister'
+import Login from './screens/Login';
+import AttendanceRegister from './screens/AttendanceRegister';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ const LoginNavigator = () => {
             <Stack.Screen name = "AttendanceRegister" component = {AttendanceRegister}/>
         </Stack.Navigator>
     )
-}
+};
 
 const Navigator = () => {
     return (
@@ -22,6 +22,6 @@ const Navigator = () => {
             <LoginNavigator/>
         </NavigationContainer>
     )
-}
+};
 
 export default Navigator;
