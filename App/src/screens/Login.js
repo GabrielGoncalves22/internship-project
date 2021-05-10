@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
+import Header from '../components/Header';
 import LoginInput from '../components/LoginInput';
 import { server, showError, showSuccess } from '../common';
 
@@ -25,13 +26,12 @@ export default class App extends Component {
                 password: this.state.password
             })
 
-            if (remember) {
+            if (this.state.remember) {
                 AsyncStorage.setItem('token', res.data.token)
-            }
-            
-            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            } 
 
-            this.props.navigation.navigate('AttendanceRegister')            
+            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            this.props.navigation.navigate('Home')           
 
         } catch (error) {
             showError(error)
@@ -42,30 +42,31 @@ export default class App extends Component {
         const validForm = this.state.email && this.state.password && this.state.email.includes('@')
         return (
             <View style = {styles.container}>
+                <Header/>
                 <View style = {styles.form}>
                     <LoginInput icon = 'at' placeholder = 'Email'
                         value = {this.state.email}
                         onChangeText = {email => this.setState({email})} 
                     />
-                    <LoginInput icon = 'at' placeholder = 'Palavra-passe' 
+                    <LoginInput icon = 'lock' placeholder = 'Palavra-passe' 
                         secureTextEntry = {true}
                         value = {this.state.password}                    
                         onChangeText = {password => this.setState({password})}
-                    />
-                </View>
-                <View style = {styles.containerCheckBox}>
-                    <CheckBox
-                        value = {this.state.remember}
-                        onValueChange = {remember => this.setState({remember})}
-                    />
-                    <Text>Lembrar</Text>
-                </View>
-                <TouchableOpacity onPress = {this.login}
-                    disabled = {!validForm}>
-                    <View style = {[styles.button, validForm ? {} : {backgroundColor: '#AAA'}]}>
-                        <Text style = {styles.buttonText}>Entrar</Text>
+                    />                
+                    <View style = {styles.containerCheckBox}>
+                        <CheckBox
+                            value = {this.state.remember}
+                            onValueChange = {remember => this.setState({remember})}
+                        />
+                        <Text style = {styles.textCheckbox}>Lembrar</Text>
                     </View>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress = {this.login}
+                        disabled = {!validForm} activeOpacity = {0.9}>
+                        <View style = {[styles.button, validForm ? {} : {backgroundColor: '#AAA'}]}>
+                            <Text style = {styles.buttonText}>Entrar</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -75,26 +76,30 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#E0FFFF'
     },
     form: {
-        padding: 20,
-        width: '90%'
+        flex: 1,
+        padding: 25
     },
     button: {
         backgroundColor: '#005580',
-        marginTop: 10,
-        padding: 10,
+        height: 45,
         alignItems: 'center',
-        borderRadius: 8
+        justifyContent: 'center',
+        borderRadius: 10
     },
     buttonText: {
         color: '#FFF',
-        fontSize: 15
+        fontSize: 18,
     },
     containerCheckBox: {
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 10 
+    },
+    textCheckbox: {
+        fontSize: 18
     }
 });
