@@ -28,7 +28,7 @@ module.exports = (app) => {
     const postEmployee = async (req, res) => {
         try {
 
-            if (!req.body.email || !req.body.password || !req.body.name || !req.body.address || !req.body.postalCode || !req.body.locality || !req.body.mobilePhone) {
+            if (!req.body.email.trim() || !req.body.password.trim() || !req.body.name.trim() || !req.body.address.trim() || !req.body.postalCode.trim() || !req.body.locality.trim() || !req.body.mobilePhone.trim()) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 let query = "Select * from user where email = ?";
@@ -57,7 +57,7 @@ module.exports = (app) => {
     const loginEmployee = async (req, res) => {
         try {
 
-            if (!req.body.email || !req.body.password) {
+            if (!req.body.email.trim() || !req.body.password.trim()) {
                 return res.status(400).send('Dados incompletos!');
             } else {
                 const query = "Select employee.employeeId, employee.entityId, user.password, user.permission, user.state from employee inner join user on employee.userId = user.userId where email = ?";

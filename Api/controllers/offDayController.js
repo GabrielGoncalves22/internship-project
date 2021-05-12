@@ -14,7 +14,7 @@ module.exports = (app) => {
 
     const postOffDays = async (req, res) => {
         try {
-            if (!req.body.employeeId || !req.body.date) {
+            if (!req.body.employeeId.trim() || !req.body.date.trim()) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 const query = "Insert into offDay (employeeId, description, date) values (?, ?, ?)";

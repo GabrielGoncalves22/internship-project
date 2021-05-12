@@ -14,7 +14,7 @@ module.exports = (app) => {
     const postEntity = async (req, res) => {
         try {
 
-            if (!req.body.name || !req.body.address || !req.body.postalCode || !req.body.locality || !req.body.telephone || !req.body.email) {
+            if (!req.body.name.trim() || !req.body.address.trim() || !req.body.postalCode.trim() || !req.body.locality.trim() || !req.body.telephone.trim() || !req.body.email.trim()) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 const query = "Insert into entity (name, address, address2, postalCode, locality, telephone, fax, email) values (?, ?, ?, ?, ?, ?, ?, ?)";
