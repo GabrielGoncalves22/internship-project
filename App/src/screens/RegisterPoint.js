@@ -18,10 +18,10 @@ export default class App extends Component {
     };
 
     componentDidMount = async () => {
-        this.lastAttendace()
+        this.lastAttendance()
     };
 
-    lastAttendace = async () => {
+    lastAttendance = async () => {
         try {
             const res = await axios.get(`${server}/attendance`)
             this.setState({lastAttendance: res.data[0]})    
@@ -30,11 +30,11 @@ export default class App extends Component {
         }
     };
 
-    postAttendace = async () => {
+    postAttendance = async () => {
         try {
             const res = await axios.post(`${server}/attendance`)
             showSuccess(res.data)
-            this.lastAttendace()
+            this.lastAttendance()
         } catch (error) {
             showError (error)
         }
@@ -58,7 +58,7 @@ export default class App extends Component {
                         {`${dateLastAttendance} às ${hourLastAttendance}`}
                     </Text>
                 </View>
-                <TouchableOpacity style = {styles.button} onPress = {this.postAttendace} activeOpacity = {0.8}>
+                <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
                     <Icon style = {styles.iconButton}
                         name = {this.state.lastAttendance.typeAttendance === 'Entrada' ? 'door-closed' : 'door-open'} 
                         color = {this.state.lastAttendance.typeAttendance === 'Entrada' ? '#FF0000' : '#008000'}
