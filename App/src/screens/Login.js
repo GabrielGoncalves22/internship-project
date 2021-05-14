@@ -11,7 +11,8 @@ import { server, showError, showSuccess } from '../common';
 const initialState = {
     email: '',
     password: '',
-    remember: false
+    securePassword: true,
+    remember: false    
 };
 
 export default class App extends Component {
@@ -49,7 +50,8 @@ export default class App extends Component {
                         onChangeText = {email => this.setState({email})} 
                     />
                     <LoginInput icon = 'lock' placeholder = 'Palavra-passe' 
-                        secureTextEntry = {true}
+                        password onChangeSecureTextEntry = {() => this.setState({securePassword: !this.state.securePassword})}
+                        secureTextEntry = {this.state.securePassword}
                         value = {this.state.password}                    
                         onChangeText = {password => this.setState({password})}
                     />                
