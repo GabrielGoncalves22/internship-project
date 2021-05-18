@@ -63,7 +63,7 @@ export default class App extends Component {
                         <Text style = {styles.textCheckbox}>Lembrar</Text>
                     </View>
                     <TouchableOpacity onPress = {this.login}
-                        disabled = {!validForm} activeOpacity = {0.9}>
+                        disabled = {!validForm} activeOpacity = {0.8}>
                         <View style = {[styles.button, validForm ? {} : {backgroundColor: '#AAA'}]}>
                             <Text style = {styles.buttonText}>Entrar</Text>
                         </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: '#E0FFFF'
+        backgroundColor: '#FFF'
     },
     form: {
         flex: 1,
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#005580',
         height: 45,
+        justifyContent: 'center', 
         alignItems: 'center',
-        justifyContent: 'center',
         borderRadius: 10
     },
     buttonText: {

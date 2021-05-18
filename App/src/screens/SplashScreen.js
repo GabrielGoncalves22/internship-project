@@ -32,9 +32,9 @@ export default class LoginOrHome extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#E0FFFF'
+        alignItems: 'center',        
+        backgroundColor: '#FFF'
     },
     activityIndicator: {
         flex: 1,

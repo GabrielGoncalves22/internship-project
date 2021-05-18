@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/pt';
 
 import { server, showError, showSuccess} from '../common';
-import Header from '../components/Header';
 
 const initialState = {
     lastAttendance: []
@@ -46,8 +46,11 @@ export default class App extends Component {
 
         return (
             <View style = {styles.container}>
-                <Header style = {styles.header}/>
-                <View style = {styles.form}>
+                <View style = {styles.headerContainer}>
+                    <IconAntDesign name = 'pushpino' size = {25} color = '#FFF'/>
+                    <Text style = {styles.textHeader}>Registar Ponto</Text>                    
+                </View>
+                <View style = {styles.formContainer}>
                     <Text style = {styles.titleForm}>
                         Último Registo
                     </Text>
@@ -58,13 +61,15 @@ export default class App extends Component {
                         {`${dateLastAttendance} às ${hourLastAttendance}`}
                     </Text>
                 </View>
-                <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
-                    <Icon style = {styles.iconButton}
-                        name = {this.state.lastAttendance.typeAttendance === 'Entrada' ? 'door-closed' : 'door-open'} 
-                        color = {this.state.lastAttendance.typeAttendance === 'Entrada' ? '#FF0000' : '#008000'}
-                        size = {75}/>
-                    <Text style = {styles.textButton}>{this.state.lastAttendance.typeAttendance === 'Entrada' ? 'Registar Saída' : 'Registar Entrada'}</Text>
-                </TouchableOpacity>
+                <View style = {styles.buttonContainer}>
+                    <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
+                        <Icon style = {styles.iconButton}
+                            name = {this.state.lastAttendance.typeAttendance === 'Entrada' ? 'door-closed' : 'door-open'} 
+                            color = {this.state.lastAttendance.typeAttendance === 'Entrada' ? '#FF0000' : '#008000'}
+                            size = {75}/>
+                        <Text style = {styles.textButton}>{this.state.lastAttendance.typeAttendance === 'Entrada' ? 'Registar Saída' : 'Registar Entrada'}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -73,38 +78,57 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#E0FFFF'
-    },
-    header: {
-        
-    },
-    form: {
-        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',        
-        width: '100%'
+        backgroundColor: '#FFF'
+    },
+    headerContainer: {
+        flex: 0.2, 
+        flexDirection: 'row',
+        backgroundColor: '#005580',
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textHeader: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FFF',
+        marginLeft: 20
+    },
+    formContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',                
+        width: '100%',
+        borderColor: '#014A6E',
+        borderBottomWidth: 1
     },
     titleForm: {
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#005580'
     },
     textForm: {
         fontSize: 25
     },
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',          
+    },
     button: {
-        flex: 1,        
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center', 
-        justifyContent: 'center',       
-        padding: 25,
-        width: '100%'   
+        padding: 50,
+        width: '100%'
     },
     textButton: {        
         fontSize: 25,
-        fontWeight: 'bold',
-        marginLeft: 30
+        fontWeight: 'bold',        
+        marginLeft: 30,
+        color: '#005580',
     },
     iconButton: {
         marginLeft: 30

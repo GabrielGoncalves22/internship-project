@@ -26,11 +26,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        padding: 10,
         alignItems: 'center',
+        padding: 10,        
         borderColor: '#AAA',
-        borderBottomWidth: 1,        
-        backgroundColor: '#E0FFFF'
+        borderBottomWidth: 1
     },
     icon: {
         marginLeft: 10

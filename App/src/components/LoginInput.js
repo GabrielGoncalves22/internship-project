@@ -19,21 +19,23 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
+        flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
         height: 45,
         backgroundColor: '#FFF',
-        borderRadius: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
+        borderRadius: 10, 
+        borderWidth: 1,  
+        borderColor: '#014A6E',
         marginBottom: 10
     },
     icon: {
         color: '#333',
         marginLeft: 15
     },
-    input: {        
+    input: {
+        fontSize: 18,        
         width: '80%',
-        marginLeft: 15,
-        fontSize: 18
+        marginLeft: 15        
     }
 });
