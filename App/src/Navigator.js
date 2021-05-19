@@ -8,6 +8,7 @@ import SplashScreen from './screens/SplashScreen';
 import Login from './screens/Login';
 import RegisterPoint from './screens/RegisterPoint';
 import MyRecords from './screens/MyRecords';
+import Settings from './screens/Settings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,6 +42,12 @@ const TabNavigator = () => {
                     tabBarLabel: 'Meus registos',
                     tabBarIcon : ({ focused }) =>
                         <Icon name = 'clockcircleo' size = {25} color = {focused ? activeTintLabelColor : inactiveTintLabelColor}/> }}
+            />
+            <Tab.Screen name = "Settings" component = {Settings}
+                options = {{                    
+                    tabBarLabel: 'Definições',
+                    tabBarIcon : ({ focused }) =>
+                        <Icon name = 'setting' size = {25} color = {focused ? activeTintLabelColor : inactiveTintLabelColor}/> }}
             />
         </Tab.Navigator>
     )
