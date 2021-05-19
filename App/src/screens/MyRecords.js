@@ -20,7 +20,9 @@ export default class MyRecords extends Component {
     };
 
     componentDidMount = async () => {
-        this.getAllAttendances()
+        this.focusListener = this.props.navigation.addListener("focus", () => {      
+            this.getAllAttendances()    
+        })
     };
 
     getAllAttendances =  async () => {

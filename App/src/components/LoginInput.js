@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
         height: 45,
         backgroundColor: '#FFF',
         borderRadius: 10, 
-        borderWidth: 1,  
-        borderColor: '#014A6E',
+        borderBottomWidth: 2,
+        borderBottomColor: '#014A6E',
         marginBottom: 10
     },
     icon: {

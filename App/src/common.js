@@ -6,14 +6,14 @@ const server = Platform.OS === 'ios'
 
 function showError(error) {
     if (error.response && error.response.data) {
-        Alert.alert('Erro', error.response.data)
+        Alert.alert('Registo de Assiduidade', error.response.data)
     } else {
-        Alert.alert('Erro', error)
+        Alert.alert('Registo de Assiduidade', error)
     }    
 };
 
 function showSuccess(msg) {
-    Alert.alert(msg)
+    Alert.alert('Registo de Assiduidade', msg)
 };
 
 export { server, showError, showSuccess };

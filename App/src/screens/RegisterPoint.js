@@ -49,18 +49,25 @@ export default class App extends Component {
                 <View style = {styles.headerContainer}>
                     <IconAntDesign name = 'pushpino' size = {25} color = '#FFF'/>
                     <Text style = {styles.textHeader}>Registar Ponto</Text>                    
-                </View>
-                <View style = {styles.formContainer}>
-                    <Text style = {styles.titleForm}>
-                        Último Registo
-                    </Text>
-                    <Text style = {styles.textForm}>
-                        {this.state.lastAttendance.typeAttendance}
-                    </Text>
-                    <Text style = {styles.textForm}>
-                        {`${dateLastAttendance} às ${hourLastAttendance}`}
-                    </Text>
-                </View>
+                </View>                
+                {this.state.lastAttendance != []
+                ?   <View style = {styles.formContainer}>                     
+                        <Text style = {styles.titleForm}>
+                            Último Registo
+                        </Text>
+                        <Text style = {styles.textForm}>
+                            {this.state.lastAttendance.typeAttendance}
+                        </Text>
+                        <Text style = {styles.textForm}>
+                            {`${dateLastAttendance} às ${hourLastAttendance}`}
+                        </Text>
+                    </View>
+                :   <View style = {styles.formContainer}>                     
+                        <Text style = {styles.titleForm}>
+                            Sem Último Registo
+                        </Text>
+                    </View>
+                }
                 <View style = {styles.buttonContainer}>
                     <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
                         <Icon style = {styles.iconButton}
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',                
         width: '100%',
-        borderColor: '#014A6E',
+        borderColor: '#AAA',
         borderBottomWidth: 1
     },
     titleForm: {
