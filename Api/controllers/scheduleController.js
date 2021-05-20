@@ -14,7 +14,7 @@ module.exports = (app) => {
 
     const postSchedule = async (req, res) => {
         try {
-            if (!req.body.description.trim() || !req.body.lunchBreak.trim() || !req.body.normalHours.trim() || !req.body.details.trim()) {
+            if (!req.body.lunchBreak || !req.body.normalHours || !req.body.details) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 let query = "Insert into schedule (entityId, description, lunchBreak, normalHours) values (?, ?, ?, ?)";
@@ -36,7 +36,7 @@ module.exports = (app) => {
 
     const postEmployeeSchedule =  async (req, res) => {
         try {
-            if (!req.body.scheduleId.trim() || !req.body.employeeId.trim()) {
+            if (!req.body.scheduleId || !req.body.employeeId) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 const query = "Insert into employeeSchedule (scheduleId, employeeId) values (?, ?)";

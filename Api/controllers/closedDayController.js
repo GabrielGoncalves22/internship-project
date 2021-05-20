@@ -14,7 +14,7 @@ module.exports = (app) => {
 
     const postClosedDay = async (req, res) => {
         try {
-            if (!req.body.date.trim()) {
+            if (!req.body.date) {
                 return res.status(400).send("Dados incompletos!");
             } else {
                 const query = "Insert into closedDay (entityId, description, date) values (?, ?, ?)";
