@@ -54,6 +54,36 @@ module.exports = (app) => {
         }
     };
 
+    const putEmployeePassword = async (req, res) => {
+        try {
+            if (!req.body.currentPassword || !req.body.newPassword) {
+                return res.status(400).send("Dados incompletos!");
+            } else {
+
+                let query = "Select user.userId, user.password from user inner join employee on user.userId = employee.userId where employee.employeeID = ?";
+                let result = await app.config.connectionDB(query, [req.user.employeeId]);                
+
+                if (await bcrypt.compare(req.body.currentPassword, result[0].password)) {
+
+                    if (req.body.currentPassword === req.body.newPassword) {
+                        return res.status(401).send('A nova palavra-passe é igual à atual!');
+                    } else {
+                        const hash = await bcrypt.hash(req.body.newPassword, 10);
+
+                        query = "Update user set password = ? where userId = ?";
+                        result = await app.config.connectionDB(query, [hash, result[0].userId]);
+
+                        return res.status(201).send("Palavra-passe alterada com sucesso!");
+                    }
+                } else {
+                    return res.status(401).send('Palavra-passe atual errada!');
+                }
+            }
+        } catch ( error ) {
+            return res.status(500).send(error);
+        }
+    };
+
     const loginEmployee = async (req, res) => {
         try {
 
@@ -92,5 +122,5 @@ module.exports = (app) => {
         }
     };
 
-    return { getAllEmployees, getEmployee, postEmployee, loginEmployee }
+    return { getAllEmployees, getEmployee, postEmployee, putEmployeePassword, loginEmployee }
 };
