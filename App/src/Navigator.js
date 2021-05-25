@@ -8,6 +8,7 @@ import SplashScreen from './screens/SplashScreen';
 import Login from './screens/Login';
 import RegisterPoint from './screens/RegisterPoint';
 import MyRecords from './screens/MyRecords';
+import MyOffDays from './screens/MyOffDays';
 import Settings from './screens/Settings';
 
 const Stack = createStackNavigator();
@@ -39,9 +40,15 @@ const TabNavigator = () => {
             />
             <Tab.Screen name = "MyRecords" component = {MyRecords}
                 options = {{
-                    tabBarLabel: 'Meus registos',
+                    tabBarLabel: 'Meus Registos',
                     tabBarIcon : ({ focused }) =>
                         <Icon name = 'clockcircleo' size = {25} color = {focused ? activeTintLabelColor : inactiveTintLabelColor}/> }}
+            />
+            <Tab.Screen name = 'MyOffDays' component = {MyOffDays}
+                options = {{
+                    tabBarLabel: 'Minhas Folgas',
+                    tabBarIcon : ({ focused }) =>
+                        <Icon name = 'calendar' size = {25} color = {focused ? activeTintLabelColor : inactiveTintLabelColor}/> }}
             />
             <Tab.Screen name = "Settings" component = {Settings}
                 options = {{                    
