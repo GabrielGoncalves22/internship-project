@@ -5,5 +5,5 @@ module.exports = (app) => {
         .post(app.middleware.login.required, app.controllers.attendanceController.postAttendance)
     
     app.route('/attendance/date')
-    .get(app.middleware.login.required, app.controllers.attendanceController.getDateAttendances)
+        .get(app.middleware.login.required, app.controllers.attendanceController.getDateAttendances)
 };

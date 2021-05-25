@@ -1,9 +1,10 @@
 module.exports = (app) => {
+    let query, result;
 
     const getSchedules = async (req, res) => {
         try {
-            let query = "Select schedule.scheduleId, schedule.description, schedule.lunchBreak, schedule.normalHours, detailsSchedule.detailsScheduleId, detailsSchedule.description, detailsSchedule.startTime, detailsSchedule.endTime from schedule inner join employeeSchedule on schedule.scheduleId  = employeeSchedule.scheduleId inner join detailsSchedule on schedule.scheduleId = detailsSchedule.scheduleId where employeeSchedule.employeeId = ? order by detailsSchedule.startTime asc";
-            let result = await app.config.connectionDB(query, [req.user.employeeId]);
+            query = "Select schedule.scheduleId, schedule.description, schedule.lunchBreak, schedule.normalHours, detailsSchedule.detailsScheduleId, detailsSchedule.description, detailsSchedule.startTime, detailsSchedule.endTime from schedule inner join employeeSchedule on schedule.scheduleId  = employeeSchedule.scheduleId inner join detailsSchedule on schedule.scheduleId = detailsSchedule.scheduleId where employeeSchedule.employeeId = ? order by detailsSchedule.startTime asc";
+            result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
 
@@ -17,8 +18,8 @@ module.exports = (app) => {
             if (!req.body.lunchBreak || !req.body.normalHours || !req.body.details) {
                 return res.status(400).send("Dados incompletos!");
             } else {
-                let query = "Insert into schedule (entityId, description, lunchBreak, normalHours) values (?, ?, ?, ?)";
-                let result = await app.config.connectionDB(query, [req.user.entityId, req.body.description, req.body.lunchBreak, req.body.normalHours]);
+                query = "Insert into schedule (entityId, description, lunchBreak, normalHours) values (?, ?, ?, ?)";
+                result = await app.config.connectionDB(query, [req.user.entityId, req.body.description, req.body.lunchBreak, req.body.normalHours]);
                 
                 const scheduleId =  result.insertId;
 
@@ -39,8 +40,8 @@ module.exports = (app) => {
             if (!req.body.scheduleId || !req.body.employeeId) {
                 return res.status(400).send("Dados incompletos!");
             } else {
-                const query = "Insert into employeeSchedule (scheduleId, employeeId) values (?, ?)";
-                const result = await app.config.connectionDB(query, [req.body.scheduleId, req.body.employeeId]);
+                query = "Insert into employeeSchedule (scheduleId, employeeId) values (?, ?)";
+                await app.config.connectionDB(query, [req.body.scheduleId, req.body.employeeId]);
 
                 return res.status(201).send("Inserido horário para um funcionário com sucesso!");
             }

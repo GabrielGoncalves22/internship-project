@@ -1,12 +1,25 @@
 module.exports = (app) => {
+    let query, result;
     
     const getClosedDays = async (req, res) => {
         try {
-            const query = "Select closedDayId, description, date from closedDay where entityId = ?"; 
-            const result = await app.config.connectionDB(query, [req.user.entityId]);
+            query = "Select closedDayId, description, date from closedDay where entityId = ?"; 
+            result = await app.config.connectionDB(query, [req.user.entityId]);
 
             return res.status(200).send(result);
 
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    };
+
+    const getDateClosedDays = async (req, res) => {
+        try {
+            query = "Select closedDayId, description, date from closedDay where date >= ? and date <= ? and entityId = ?";
+            result = await app.config.connectionDB(query, [req.query.initialDate, req.query.finalDate, req.user.entityId]);
+
+            return res.status(200).send(result);
+            
         } catch (error) {
             return res.status(500).send(error);
         }
@@ -17,8 +30,8 @@ module.exports = (app) => {
             if (!req.body.date) {
                 return res.status(400).send("Dados incompletos!");
             } else {
-                const query = "Insert into closedDay (entityId, description, date) values (?, ?, ?)";
-                const result = await app.config.connectionDB(query, [req.user.entityId, req.body.description, req.body.date]);
+                query = "Insert into closedDay (entityId, description, date) values (?, ?, ?)";
+                await app.config.connectionDB(query, [req.user.entityId, req.body.description, req.body.date]);
 
                 return res.status(201).send("Registo inserido com sucesso!");
             }
@@ -27,5 +40,5 @@ module.exports = (app) => {
         }
     };
 
-    return { getClosedDays, postClosedDay }
+    return { getClosedDays, getDateClosedDays, postClosedDay }
 };

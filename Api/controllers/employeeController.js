@@ -1,12 +1,12 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 module.exports = (app) => {
+    const bcrypt = require('bcrypt');
+    const jwt = require('jsonwebtoken');
+    let query, result;
 
     const getAllEmployees = async (req, res) => {
         try {
-            const query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId inner join entity on employee.entityId = entity.entityId where entity.entityId = ? order by employee.employeeId asc";
-            const result = await app.config.connectionDB(query, [req.user.entityId]);
+            query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId inner join entity on employee.entityId = entity.entityId where entity.entityId = ? order by employee.employeeId asc";
+            result = await app.config.connectionDB(query, [req.user.entityId]);
 
             return res.status(200).send(result);
         } catch (error) {
@@ -16,8 +16,8 @@ module.exports = (app) => {
 
     const getEmployee = async (req, res) => {
         try {
-            const query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId where employeeId = ?";
-            const result = await app.config.connectionDB(query, [req.user.employeeId]);
+            query = "Select employee.employeeId, employee.name, employee.address, employee.address2, employee.postalCode, employee.locality, employee.mobilePhone, employee.telephone, employee.grades, user.email from employee inner join user on employee.userId = user.userId where employeeId = ?";
+            result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
         } catch (error) {
@@ -31,8 +31,8 @@ module.exports = (app) => {
             if (!req.body.email.trim() || !req.body.password.trim() || !req.body.name.trim() || !req.body.address.trim() || !req.body.postalCode.trim() || !req.body.locality.trim() || !req.body.mobilePhone.trim()) {
                 return res.status(400).send("Dados incompletos!");
             } else {
-                let query = "Select * from user where email = ?";
-                let result = await app.config.connectionDB(query, [req.body.email.toLowerCase()]);
+                query = "Select * from user where email = ?";
+                result = await app.config.connectionDB(query, [req.body.email.toLowerCase()]);
         
                 if (result.length > 0) {
                     return res.status(409).send("Já se encontra registado um funcionário com o email indicado!");
@@ -40,10 +40,10 @@ module.exports = (app) => {
                     const hash = await bcrypt.hash(req.body.password, 10);
 
                     query = "Insert into user (description, email, password, creationDate) values (?, ?, ?, ?)";
-                    result = await app.config.connectionDB(query, [req.body.description, req.body.email.toLowerCase(), hash, new Date()]);
+                    await app.config.connectionDB(query, [req.body.description, req.body.email.toLowerCase(), hash, new Date()]);
 
                     query = "Insert into employee (name, address, address2, postalCode, locality, telephone, mobilePhone, grades, entityId, userId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    result = await app.config.connectionDB(query, [req.body.name, req.body.address, req.body.address2, req.body.postalCode, req.body.locality, req.body.telephone, req.body.mobilePhone, req.body.grades, req.user.entityId, result.insertId]);
+                    await app.config.connectionDB(query, [req.body.name, req.body.address, req.body.address2, req.body.postalCode, req.body.locality, req.body.telephone, req.body.mobilePhone, req.body.grades, req.user.entityId, result.insertId]);
 
                     return res.status(201).send("Funcionário inserido com sucesso!");
                 } 
@@ -60,8 +60,8 @@ module.exports = (app) => {
                 return res.status(400).send("Dados incompletos!");
             } else {
 
-                let query = "Select user.userId, user.password from user inner join employee on user.userId = employee.userId where employee.employeeID = ?";
-                let result = await app.config.connectionDB(query, [req.user.employeeId]);                
+                query = "Select user.userId, user.password from user inner join employee on user.userId = employee.userId where employee.employeeID = ?";
+                result = await app.config.connectionDB(query, [req.user.employeeId]);                
 
                 if (await bcrypt.compare(req.body.currentPassword, result[0].password)) {
 
@@ -71,7 +71,7 @@ module.exports = (app) => {
                         const hash = await bcrypt.hash(req.body.newPassword, 10);
 
                         query = "Update user set password = ? where userId = ?";
-                        result = await app.config.connectionDB(query, [hash, result[0].userId]);
+                        await app.config.connectionDB(query, [hash, result[0].userId]);
 
                         return res.status(201).send("Palavra-passe alterada com sucesso!");
                     }
@@ -90,8 +90,8 @@ module.exports = (app) => {
             if (!req.body.email.trim() || !req.body.password.trim()) {
                 return res.status(400).send('Dados incompletos!');
             } else {
-                const query = "Select employee.employeeId, employee.entityId, user.password, user.permission, user.state from employee inner join user on employee.userId = user.userId where email = ?";
-                const result = await app.config.connectionDB(query, [req.body.email.toLowerCase()]);
+                query = "Select employee.employeeId, employee.entityId, user.password, user.permission, user.state from employee inner join user on employee.userId = user.userId where email = ?";
+                result = await app.config.connectionDB(query, [req.body.email.toLowerCase()]);
 
                 if (result.length > 0) {
 

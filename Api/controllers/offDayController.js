@@ -1,12 +1,25 @@
 module.exports = (app) => {
-    
+    let query, result;
+
     const getOffDays = async (req, res) => {
         try {
-            const query = "Select offDayId, description, date from offDay where employeeId = ?"; 
-            const result = await app.config.connectionDB(query, [req.user.employeeId]);
+            query = "Select offDayId, description, date from offDay where employeeId = ?"; 
+            result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
 
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    };
+
+    const getDateOffDays = async (req, res) => {
+        try {
+            query = "Select offDayId, description, date from offDay where date >= ? and date <= ? and employeeId = ?";
+            result = await app.config.connectionDB(query, [req.query.initialDate, req.query.finalDate, req.user.employeeId]);
+
+            return res.status(200).send(result);
+            
         } catch (error) {
             return res.status(500).send(error);
         }
@@ -17,8 +30,8 @@ module.exports = (app) => {
             if (!req.body.employeeId || !req.body.date) {
                 return res.status(400).send("Dados incompletos!");
             } else {
-                const query = "Insert into offDay (employeeId, description, date) values (?, ?, ?)";
-                const result = await app.config.connectionDB(query, [req.body.employeeId, req.body.description, req.body.date]);
+                query = "Insert into offDay (employeeId, description, date) values (?, ?, ?)";
+                await app.config.connectionDB(query, [req.body.employeeId, req.body.description, req.body.date]);
 
                 return res.status(201).send("Registo inserido com sucesso!");
             }
@@ -27,5 +40,5 @@ module.exports = (app) => {
         }
     };
 
-    return { getOffDays, postOffDays }
+    return { getOffDays, getDateOffDays, postOffDays }
 };
