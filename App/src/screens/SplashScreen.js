@@ -4,20 +4,28 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 import Header from '../components/Header';
+import { isNetworkAvailable, showError } from '../common';
 
 export default class LoginOrHome extends Component {
     componentDidMount = async () => {
         const token = await AsyncStorage.getItem('token')
+
+        if (await isNetworkAvailable()) {
         
-        setTimeout(() => {
-            if (token) {
-                axios.defaults.headers.common['Authorization'] = `bearer ${token}`            
-                this.props.navigation.navigate('Home')          
-            } else {            
-                this.props.navigation.navigate('Login')              
-            }
-        }, 2000);
-    }
+            setTimeout(() => {
+                if (token) {
+                    axios.defaults.headers.common['Authorization'] = `bearer ${token}`            
+                    this.props.navigation.navigate('Home')          
+                } else {            
+                    this.props.navigation.navigate('Login')              
+                }
+            }, 2000);
+
+        } else {
+            showError('Sem conexão à internet. Certifique-se de que o wi-fi ou os dados móveis estão ligados e inicie novamente a aplicação!')
+        }
+
+    };
 
     render() {
         return (

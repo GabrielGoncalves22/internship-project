@@ -1,8 +1,14 @@
 import { Alert, Platform } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 const server = Platform.OS === 'ios'
     ? 'http://localhost:3000'
     : 'http://10.0.2.2:3000';
+
+const isNetworkAvailable = async () => {
+    const netInfo = await NetInfo.fetch();
+    return await netInfo.isInternetReachable
+};
 
 function showError(error) {
     if (error.response && error.response.data) {
@@ -16,4 +22,4 @@ function showSuccess(msg) {
     Alert.alert('Registo de Assiduidade', msg)
 };
 
-export { server, showError, showSuccess };
+export { server, isNetworkAvailable, showError, showSuccess };
