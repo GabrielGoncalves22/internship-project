@@ -23,6 +23,17 @@ module.exports = (app) => {
         }
     };
 
+    const getLastAttendance = async (req, res) => {
+        try {
+            query = "Select attendance.attendanceId, attendance.dateAttendance, typeAttendance.description as 'typeAttendance' from attendance inner join typeAttendance on attendance.typeAttendanceId = typeAttendance.typeAttendanceId where attendance.employeeId = ? order by dateAttendance desc limit 1";
+            result = await app.config.connectionDB(query, [req.user.employeeId]);
+
+            return res.status(200).send(result);
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    };
+
     const postAttendance = async (req, res) => {
         try {
 
@@ -46,5 +57,5 @@ module.exports = (app) => {
         }
     };
 
-    return { getAllAttendances, getDateAttendances, postAttendance }
+    return { getAllAttendances, getDateAttendances, getLastAttendance, postAttendance }
 };

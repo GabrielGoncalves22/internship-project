@@ -23,8 +23,8 @@ export default class App extends Component {
 
     lastAttendance = async () => {
         try {
-            const res = await axios.get(`${server}/attendance`)
-            this.setState({lastAttendance: res.data[0]})    
+            const res = await axios.get(`${server}/attendance/last`)
+            this.setState({lastAttendance: res.data[0]})
         } catch (error) {
             showError (error)
         }
