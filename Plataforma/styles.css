@@ -1,0 +1,19 @@
+.div-form-login {
+    background-color: #005580;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-login {
+    background-color: white;
+    padding: 25px;
+    width: 25%;
+    border: 10px solid #014A6E;
+}
+
+.info-login {
+    display: none;
+}
