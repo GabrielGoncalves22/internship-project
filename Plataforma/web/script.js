@@ -5,16 +5,18 @@ $(document).ready(function(){
         let password = $("#password").val();
 
         if (!email || !password) {
+            
             $("#infoLogin").text("Dados Vazios!")
             $(".info-login").show()
+        
         } else {
+            
             $.ajax({
-                url: "../Handlers/LoginHandler.php",
+                url: "../handlers/loginHandler.php",
                 type: "POST",
                 data: {email, password},
                 dataType: "html",
-                success: function(response) {   
-                    alert (response)            
+                success: function(response) {  
 
                     switch(response) {
                         case 'Insucesso':
