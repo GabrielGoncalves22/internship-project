@@ -3,7 +3,7 @@ module.exports = (app) => {
     
     const getAllAttendances = async (req, res) => {
         try {
-            query = "Select attendance.attendanceId, attendance.dateAttendance, typeAttendance.description as 'typeAttendance' from attendance inner join typeAttendance on attendance.typeAttendanceId = typeAttendance.typeAttendanceId where attendance.employeeId = ? order by dateAttendance desc";
+            query = "Select attendances.attendanceId, attendances.dateAttendance, typesAttendances.description as 'typeAttendance' from attendances inner join typesAttendances on attendances.typeAttendanceId = typesAttendances.typeAttendanceId where attendances.employeeId = ? order by attendances.dateAttendance desc";
             result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
@@ -14,7 +14,7 @@ module.exports = (app) => {
 
     const getDateAttendances = async (req, res) => {
         try {            
-            query = "Select attendance.attendanceId, attendance.dateAttendance, typeAttendance.description as 'typeAttendance' from attendance inner join typeAttendance on attendance.typeAttendanceId = typeAttendance.typeAttendanceId where attendance.dateAttendance >= ? And attendance.dateAttendance <= ? And attendance.employeeId = ? order by dateAttendance desc"; 
+            query = "Select attendances.attendanceId, attendances.dateAttendance, typesAttendances.description as 'typeAttendance' from attendances inner join typesAttendances on attendances.typeAttendanceId = typesAttendances.typeAttendanceId where attendances.dateAttendance >= ? And attendances.dateAttendance <= ? And attendances.employeeId = ? order by attendances.dateAttendance desc"; 
             result = await app.config.connectionDB(query, [req.query.initialDate, req.query.finalDate, req.user.employeeId]);
         
             return res.status(200).send(result);
@@ -25,7 +25,7 @@ module.exports = (app) => {
 
     const getLastAttendance = async (req, res) => {
         try {
-            query = "Select attendance.attendanceId, attendance.dateAttendance, typeAttendance.description as 'typeAttendance' from attendance inner join typeAttendance on attendance.typeAttendanceId = typeAttendance.typeAttendanceId where attendance.employeeId = ? order by dateAttendance desc limit 1";
+            query = "Select attendances.attendanceId, attendances.dateAttendance, typesAttendances.description as 'typeAttendance' from attendances inner join typesAttendances on attendances.typeAttendanceId = typesAttendances.typeAttendanceId where attendances.employeeId = ? order by attendances.dateAttendance desc limit 1";
             result = await app.config.connectionDB(query, [req.user.employeeId]);
 
             return res.status(200).send(result);
@@ -37,7 +37,7 @@ module.exports = (app) => {
     const postAttendance = async (req, res) => {
         try {
 
-            query = "Select typeAttendanceId from attendance where employeeId = ? order by dateAttendance desc Limit 1";
+            query = "Select typeAttendanceId from attendances where employeeId = ? order by dateAttendance desc Limit 1";
             result = await app.config.connectionDB(query, [req.user.employeeId]);
             let nextTypeAttendanceId;
 
@@ -47,7 +47,7 @@ module.exports = (app) => {
                 nextTypeAttendanceId = 1;
             }
 
-            query = "Insert into attendance (employeeId, dateAttendance, typeAttendanceId) values (?, ?, ?)";
+            query = "Insert into attendances (employeeId, dateAttendance, typeAttendanceId) values (?, ?, ?)";
             await app.config.connectionDB(query, [req.user.employeeId, new Date(), nextTypeAttendanceId]);
             
             return res.status(201).send(`${nextTypeAttendanceId === 1 ? "Entrada" : "Saída"} registada com sucesso!`);
