@@ -10,6 +10,7 @@ import RegisterPoint from './screens/RegisterPoint';
 import MyRecords from './screens/MyRecords';
 import MyOffDays from './screens/MyOffDays';
 import Settings from './screens/Settings';
+import InsertPin from './screens/InsertPin';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +66,7 @@ const LoginNavigator = () => {
         <Stack.Navigator screenOptions = {{ headerShown: false }} initialRouteName = "SplashScreen">
             <Stack.Screen name = "SplashScreen" component = {SplashScreen}/>
             <Stack.Screen name = "Login" component = {Login}/>
+            <Stack.Screen name = "InsertPin" component = {InsertPin}/>
             <Stack.Screen name = "Home" component = {TabNavigator}/>
         </Stack.Navigator>
     )

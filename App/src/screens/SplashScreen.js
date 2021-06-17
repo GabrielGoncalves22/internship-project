@@ -9,13 +9,14 @@ import { isNetworkAvailable, showError } from '../common';
 export default class LoginOrHome extends Component {
     componentDidMount = async () => {
         const token = await AsyncStorage.getItem('token')
+        const pin = await AsyncStorage.getItem('pin')
 
         if (await isNetworkAvailable()) {
         
             setTimeout(() => {
-                if (token) {
+                if (token && pin) {
                     axios.defaults.headers.common['Authorization'] = `bearer ${token}`            
-                    this.props.navigation.navigate('Home')          
+                    this.props.navigation.navigate('InsertPin')          
                 } else {            
                     this.props.navigation.navigate('Login')              
                 }

@@ -30,6 +30,7 @@ export default class Settings extends Component {
     logout = () => {        
         delete axios.defaults.headers.common['Authorization']
         AsyncStorage.removeItem('token')
+        AsyncStorage.removeItem('pin')
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Login' }],

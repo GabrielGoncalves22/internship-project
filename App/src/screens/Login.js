@@ -26,13 +26,15 @@ export default class App extends Component {
                 email: this.state.email,
                 password: this.state.password
             })
-
+            
+            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            
             if (this.state.remember) {
                 AsyncStorage.setItem('token', res.data.token)
-            } 
-
-            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
-            this.props.navigation.navigate('Home')           
+                this.props.navigation.navigate('InsertPin')
+            } else {
+                this.props.navigation.navigate('Home')
+            }               
 
         } catch (error) {
             showError(error)
