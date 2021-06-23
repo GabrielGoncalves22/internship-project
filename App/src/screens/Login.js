@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -29,9 +29,21 @@ export default class App extends Component {
             
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
             
-            if (this.state.remember) {
+            if (this.state.remember) {               
                 AsyncStorage.setItem('token', res.data.token)
-                this.props.navigation.navigate('InsertPin')
+                AsyncStorage.removeItem('pin')
+                
+                Alert.alert(
+                    "Método de Autenticação",
+                    "Indique o método de autenticação para os próximos inícios de sessão",
+                    [
+                      {
+                        text: "Impressão digital", onPress: () => this.props.navigation.navigate('Biometric'),
+                      },
+                      { text: "PIN", onPress: () => this.props.navigation.navigate('InsertPin') }
+                    ]
+                );
+
             } else {
                 this.props.navigation.navigate('Home')
             }               

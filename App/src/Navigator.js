@@ -11,6 +11,7 @@ import MyRecords from './screens/MyRecords';
 import MyOffDays from './screens/MyOffDays';
 import Settings from './screens/Settings';
 import InsertPin from './screens/InsertPin';
+import Biometric from './screens/Biometric';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ const LoginNavigator = () => {
             <Stack.Screen name = "SplashScreen" component = {SplashScreen}/>
             <Stack.Screen name = "Login" component = {Login}/>
             <Stack.Screen name = "InsertPin" component = {InsertPin}/>
+            <Stack.Screen name = "Biometric" component = {Biometric}/>
             <Stack.Screen name = "Home" component = {TabNavigator}/>
         </Stack.Navigator>
     )

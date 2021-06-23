@@ -13,10 +13,8 @@ export default class InsertPin extends Component {
     };
 
     componentDidMount = async () => {
-        const pin = await AsyncStorage.getItem('pin')
-        if (pin) {
-            this.setState({originalPin: pin})
-        }         
+        const pin = await AsyncStorage.getItem('pin')  
+        pin ?  this.setState({originalPin: pin}) : this.setState({originalPin: ''})     
     };
 
     checkPin = () => {
@@ -35,6 +33,13 @@ export default class InsertPin extends Component {
             AsyncStorage.setItem('pin', this.state.writtenPin)
             this.props.navigation.navigate('Home')
         }        
+    };
+
+    cancel = () => {        
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        })
     };
 
     render () {
@@ -57,10 +62,14 @@ export default class InsertPin extends Component {
                             onChangeText = {pin => this.setState({writtenPin: pin})}                        
                         />
                     </View>
-                    <View style = {styles.button}>
-                        <TouchableOpacity onPress = {this.checkPin} activeOpacity = {0.5}>
-                            <Text style = {styles.textButton}>Entrar</Text>
-                        </TouchableOpacity>
+                    <View style = {styles.buttons}>
+                            <TouchableOpacity onPress = {this.checkPin} activeOpacity = {0.5}>
+                                <Text style = {styles.textButton}>Entrar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity activeOpacity = {0.5} 
+                                onPress = {() => this.cancel()} >
+                                <Text style = {styles.textButton}>Cancelar</Text>
+                            </TouchableOpacity>                            
                     </View>
                 </View>
                 <TouchableWithoutFeedback>
@@ -94,21 +103,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     form: {
-        padding: 300,
-        justifyContent: 'center'
+        padding: 15
     },
     textInput: {
         fontSize: 18,
         textAlign: 'center'
     },
-    button: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end' 
     },
     textButton: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#005580',
+        margin: 20,
+        marginRight: 30
     }
 });

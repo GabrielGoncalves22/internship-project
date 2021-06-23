@@ -63,12 +63,12 @@ export default class ChangePassword extends Component {
                         onChangeText = {(repetitionPassword) => this.setState({repetitionPassword})}
                     />
                 </View>
-                <View style = {styles.buttons}>
-                    <TouchableOpacity onPress = {this.props.onCancel} activeOpacity = {0.5}>
-                        <Text style = {styles.textButton}>Cancelar</Text>
-                    </TouchableOpacity>
+                <View style = {styles.buttons}>                    
                     <TouchableOpacity onPress= {this.putEmployeePassword} activeOpacity = {0.5}>
                         <Text style = {styles.textButton}>Guardar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {this.props.onCancel} activeOpacity = {0.5}>
+                        <Text style = {styles.textButton}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
             </View>

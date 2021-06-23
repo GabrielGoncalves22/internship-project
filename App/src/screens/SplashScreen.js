@@ -14,9 +14,9 @@ export default class LoginOrHome extends Component {
         if (await isNetworkAvailable()) {
         
             setTimeout(() => {
-                if (token && pin) {
-                    axios.defaults.headers.common['Authorization'] = `bearer ${token}`            
-                    this.props.navigation.navigate('InsertPin')          
+                if (token) {
+                    axios.defaults.headers.common['Authorization'] = `bearer ${token}`   
+                    pin ? this.props.navigation.navigate('InsertPin') : this.props.navigation.navigate('Biometric') 
                 } else {            
                     this.props.navigation.navigate('Login')              
                 }

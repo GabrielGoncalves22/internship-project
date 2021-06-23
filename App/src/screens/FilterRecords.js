@@ -81,12 +81,12 @@ export default class FilterRecords extends Component {
                     <View style = {styles.form}>
                         {this.getDatePickerInitialDate()}{this.getDatePickerFinalDate()}
                     </View>
-                    <View style = {styles.buttons}>
-                        <TouchableOpacity onPress = {this.props.onCancel} activeOpacity = {0.5}>
-                            <Text style = {styles.textButton}>Cancelar</Text>
-                        </TouchableOpacity>
+                    <View style = {styles.buttons}>                        
                         <TouchableOpacity onPress = {this.filter} activeOpacity = {0.5}>
                             <Text style = {styles.textButton}>Filtrar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = {this.props.onCancel} activeOpacity = {0.5}>
+                            <Text style = {styles.textButton}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
