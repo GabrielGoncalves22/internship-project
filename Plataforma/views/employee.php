@@ -5,15 +5,15 @@
         <aside class="backend-aside">
             <table class="table"> 
                 <thead>
-                <tr>
-                    <th scope="col">Id Funcionário</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Morada</th>
-                    <th scope="col">Código-Postal</th>
-                    <th scope="col">Localidade</th>
-                    <th scope="col">Número de Telemóvel</th>
-                    <th scope="col">Email</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Id Funcionário</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Morada</th>
+                        <th scope="col">Código-Postal</th>
+                        <th scope="col">Localidade</th>
+                        <th scope="col">Número de Telemóvel</th>
+                        <th scope="col">Email</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php

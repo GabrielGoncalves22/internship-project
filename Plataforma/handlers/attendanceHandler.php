@@ -1,12 +1,12 @@
 <?php
     include_once '../web/common.php';
 
-    $url = $server . '/employee/all';
-    
+    $url = $server . '/attendance/all';
+
     $options = array(
         'http' => array(
             'header'  => 'Authorization: Bearer ' . $_SESSION['token'],
-            'method'  => 'GET'            
+            'method'  => 'GET'
         )
     );
     $context = stream_context_create($options);
