@@ -1,5 +1,10 @@
 <?php
     include_once '../site/header.php';
+
+    session_start();
+    if (isset($_SESSION['token'])) {
+        header('Location: ../views/employee.php');
+    }
 ?>
     <div class="div-form-login">
         <form class="form-login" id="form-login">

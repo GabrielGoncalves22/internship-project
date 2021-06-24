@@ -33,3 +33,11 @@ $(document).ready(function(){
         return false;
     });  
 });
+
+function logout(){
+    $.ajax({
+        url: "../handlers/logoutHandler.php",
+        success: function(response) {
+        }                        
+    });
+};
