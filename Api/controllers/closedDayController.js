@@ -3,7 +3,7 @@ module.exports = (app) => {
     
     const getClosedDays = async (req, res) => {
         try {
-            query = "Select closedDayId, description, date from closedDays where entityId = ?"; 
+            query = "Select closedDayId, description, date from closedDays where entityId = ? order by date asc"; 
             result = await app.config.connectionDB(query, [req.user.entityId]);
 
             return res.status(200).send(result);
@@ -15,7 +15,7 @@ module.exports = (app) => {
 
     const getDateClosedDays = async (req, res) => {
         try {
-            query = "Select closedDayId, description, date from closedDays where date >= ? and date <= ? and entityId = ?";
+            query = "Select closedDayId, description, date from closedDays where date >= ? and date <= ? and entityId = ? order by date asc";
             result = await app.config.connectionDB(query, [req.query.initialDate, req.query.finalDate, req.user.entityId]);
 
             return res.status(200).send(result);
