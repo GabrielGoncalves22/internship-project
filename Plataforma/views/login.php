@@ -19,7 +19,7 @@
             </div>
 
             <div>
-                <p class="info-login alert alert-danger" role="alert" id="infoLogin"></p>
+                <p class="alert alert-danger" role="alert" id="infoLogin"></p>
             </div>
 
             <div class="form-group">

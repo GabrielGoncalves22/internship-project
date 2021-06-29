@@ -3,6 +3,7 @@
     include_once '../handlers/attendanceHandler.php';
 ?>
         <aside class="backend-aside">
+            <h3>Registos</h3>
             <table class="table">
                 <thead>
                     <tr>
