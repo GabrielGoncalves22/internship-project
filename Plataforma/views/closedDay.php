@@ -3,6 +3,8 @@
     include_once '../handlers/closedDayHandler.php';
 ?>
         <aside class="backend-aside">
+            <h3>Dias fechados</h3>
+            <a href="createClosedDay.php" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Criar dia fechado</a>
             <table class="table">
                 <thead>
                     <tr>
