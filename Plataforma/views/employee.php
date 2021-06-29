@@ -3,6 +3,8 @@
     include_once '../handlers/employeeHandler.php';
 ?>
         <aside class="backend-aside">
+            <h3>Funcionários</h3>
+            <a href="createEmployee.php" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Criar Funcionário</a>
             <table class="table"> 
                 <thead>
                     <tr>
