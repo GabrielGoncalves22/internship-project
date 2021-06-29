@@ -3,6 +3,8 @@
     include_once '../handlers/offDayHandler.php';
 ?>
         <aside class="backend-aside">
+            <h3>Dias de folga</h3>
+            <a href="createOffDay.php" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Criar dia de folga</a>
             <table class="table">
                 <thead>
                     <tr>
