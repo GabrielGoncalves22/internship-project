@@ -41,8 +41,13 @@ export default class App extends Component {
     };
 
     render () {
-        const dateLastAttendance = moment(this.state.lastAttendance.dateAttendance).locale('pt').format('LL')
-        const hourLastAttendance = moment(this.state.lastAttendance.dateAttendance).locale('pt').format('LT')
+        let dateLastAttendance = '';
+        let hourLastAttendance = '';
+
+        if (typeof(this.state.lastAttendance) !== 'undefined') {
+            dateLastAttendance = moment(this.state.lastAttendance.dateAttendance).locale('pt').format('LL')
+            hourLastAttendance = moment(this.state.lastAttendance.dateAttendance).locale('pt').format('LT')
+        };
 
         return (
             <View style = {styles.container}>
@@ -50,7 +55,7 @@ export default class App extends Component {
                     <IconAntDesign name = 'pushpino' size = {25} color = '#FFF'/>
                     <Text style = {styles.textHeader}>Registar Ponto</Text>                    
                 </View>                
-                {this.state.lastAttendance != []
+                {typeof(this.state.lastAttendance) !== 'undefined'
                 ?   <View style = {styles.formContainer}>                     
                         <Text style = {styles.titleForm}>
                             Último Registo
@@ -69,13 +74,22 @@ export default class App extends Component {
                     </View>
                 }
                 <View style = {styles.buttonContainer}>
-                    <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
-                        <Icon style = {styles.iconButton}
-                            name = {this.state.lastAttendance.typeAttendance === 'Entrada' ? 'door-closed' : 'door-open'} 
-                            color = {this.state.lastAttendance.typeAttendance === 'Entrada' ? '#FF0000' : '#008000'}
-                            size = {75}/>
-                        <Text style = {styles.textButton}>{this.state.lastAttendance.typeAttendance === 'Entrada' ? 'Registar Saída' : 'Registar Entrada'}</Text>
-                    </TouchableOpacity>
+                    {typeof(this.state.lastAttendance) !== 'undefined'
+                    ?   <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
+                            <Icon style = {styles.iconButton}
+                                name = {this.state.lastAttendance.typeAttendance === 'Entrada' ? 'door-closed' : 'door-open'} 
+                                color = {this.state.lastAttendance.typeAttendance === 'Entrada' ? '#FF0000' : '#008000'}
+                                size = {75}/>
+                            <Text style = {styles.textButton}>{this.state.lastAttendance.typeAttendance === 'Entrada' ? 'Registar Saída' : 'Registar Entrada'}</Text>
+                        </TouchableOpacity>
+                    :   <TouchableOpacity style = {styles.button} onPress = {this.postAttendance} activeOpacity = {0.8}>
+                            <Icon style = {styles.iconButton}
+                                name = 'door-open' 
+                                color = '#008000'
+                                size = {75}/>
+                            <Text style = {styles.textButton}>Registar Entrada</Text>
+                        </TouchableOpacity>
+                    }                        
                 </View>
             </View>
         )
