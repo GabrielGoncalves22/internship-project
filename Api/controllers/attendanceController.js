@@ -3,7 +3,7 @@ module.exports = (app) => {
     
     const getAllAttendances = async (req, res) => {
         try {
-            query = "Select attendances.attendanceId, concat(employees.employeeId, ' - ', employees.name) As 'infoEmployee', attendances.dateAttendance, typesAttendances.description as 'typeAttendance' from attendances inner join typesAttendances on attendances.typeAttendanceId = typesAttendances.typeAttendanceId inner join employees on attendances.employeeId = employees.employeeId inner join entitys on entitys.entityId = employees.entityId where entitys.entityId = ? order by attendances.dateAttendance desc"
+            query = "Select attendances.attendanceId, employees.employeeId, employees.name, attendances.dateAttendance, typesAttendances.description as 'typeAttendance' from attendances inner join typesAttendances on attendances.typeAttendanceId = typesAttendances.typeAttendanceId inner join employees on attendances.employeeId = employees.employeeId inner join entitys on entitys.entityId = employees.entityId where entitys.entityId = ? order by attendances.dateAttendance desc"
             result = await app.config.connectionDB(query, [req.user.entityId]);
 
             return res.status(200).send(result);
