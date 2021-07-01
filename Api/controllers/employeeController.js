@@ -96,19 +96,24 @@ module.exports = (app) => {
                 if (result.length > 0) {
 
                     if (await bcrypt.compare(req.body.password, result[0].password)) {
-                        const payload = {
-                            employeeId: result[0].employeeId,
-                            entityId: result[0].entityId,
-                            permission: result[0].permission                           
-                        };
-
-                        const token = jwt.sign(payload, process.env.JWT_KEY);
-
-                        if (result[0].state) {
-                            return res.status(200).send({message: 'Login efetuado com sucesso!', token: token});
+                        
+                        if (req.body.permission && req.body.permission != result[0].permission) {
+                            return res.status(401).send('O utilizador não possui permissões!');
                         } else {
-                            return res.status(401).send('A conta encontra-se desativada!');
-                        }                        
+                            const payload = {
+                                employeeId: result[0].employeeId,
+                                entityId: result[0].entityId,
+                                permission: result[0].permission                           
+                            };
+
+                            const token = jwt.sign(payload, process.env.JWT_KEY);
+
+                            if (result[0].state) {
+                                return res.status(200).send({message: 'Login efetuado com sucesso!', token: token});
+                            } else {
+                                return res.status(401).send('A conta encontra-se desativada!');
+                            }   
+                        }                     
 
                     } else {
                         return res.status(401).send('A palavra-passe encontra-se inválida!');
