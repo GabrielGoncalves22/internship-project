@@ -7,6 +7,9 @@
     }
 ?>
     <div class="div-form-login">
+        <div class="title-login">
+            <p> Registo de Assiduidade </p>
+        </div>
         <form class="form-login" id="form-login">
             <div class="form-group">
                 <label for="email">Email</label>

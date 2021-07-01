@@ -75,6 +75,12 @@ htlm {
     padding: 10px 30px;
 }
 
+.title-login {
+    color: #FFF;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
 .div-form-login {
     background-color: #005580;
     display: flex;
@@ -93,4 +99,13 @@ htlm {
 
 .alert {
     display: none;
+}
+
+.btn {
+    margin:10px;
+}
+
+.employee-filter {
+    display: inline-block;
+    margin: 20px;
 }

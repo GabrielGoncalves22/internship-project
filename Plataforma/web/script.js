@@ -18,14 +18,13 @@ $(document).ready(function(){
                 dataType: "html",
                 success: function(response) {  
 
-                    switch(response) {
-                        case 'Insucesso':
-                            $(".alert").text("Dados inválidos!")
-                            $(".alert").show()
-                            break;
-                        case 'Sucesso':
-                            window.location.href = "./employee.php"
-                            break;
+                    response = response.split(' - ');    
+
+                    if (response[0] === '200') {
+                        window.location.href = "./employee.php"
+                    } else {
+                        $(".alert").text(response[1])
+                        $(".alert").show()
                     }
                 }
             });
@@ -66,7 +65,7 @@ $(document).ready(function(){
                         
                         setTimeout(function() {
                             window.location.href = "../views/employee.php";
-                        }, 2000);
+                        }, 1000);
                     } else {
                         $(".alert").removeClass("alert-success").addClass("alert-danger");
                     }
@@ -78,44 +77,48 @@ $(document).ready(function(){
 
     $("#form-create-closedDay").unbind().submit(function(){
         let description = $("#closedDayDescription").val();
-        let date = new Date($("#closedDayDate").val());
+        let date = $("#closedDayDate").val();   
         
-        const currentData = new Date();
-        
-        date.setHours(0, 0, 0, 0)
-        currentData.setHours(0, 0, 0, 0)        
-
         if (!date) {
             $(".alert").removeClass("alert-success").addClass("alert-danger");
             $(".alert").text("Existem campos de preenchimento obrigatório por preencher!");
             $(".alert").show();
-        } else if (currentData > date){
-            $(".alert").removeClass("alert-success").addClass("alert-danger");
-            $(".alert").text("A data não deve ser inferior à data atual!");
-            $(".alert").show();
-        } else { 
-            $.ajax({
-                url: "../handlers/createClosedDayHandler.php",
-                type: "POST",
-                data: {description, date},
-                dataType: "html",
-                success: function(response) {
+        } else {
+            date = new Date(date);
+        
+            const currentData = new Date();
+            
+            date.setHours(0, 0, 0, 0)
+            currentData.setHours(0, 0, 0, 0)   
+                
+            if (currentData > date) {
+                $(".alert").removeClass("alert-success").addClass("alert-danger");
+                $(".alert").text("A data não deve ser inferior à data atual!");
+                $(".alert").show();
+            } else { 
+                $.ajax({
+                    url: "../handlers/createClosedDayHandler.php",
+                    type: "POST",
+                    data: {description, date: $("#closedDayDate").val()},
+                    dataType: "html",
+                    success: function(response) {
 
-                    response = response.split(' - ');    
-                    $(".alert").text(response[1]);
-                    $(".alert").show();
+                        response = response.split(' - ');    
+                        $(".alert").text(response[1]);
+                        $(".alert").show();
 
-                    if (response[0] === '201') {
-                        $(".alert").removeClass("alert-danger").addClass("alert-success");
-                        
-                        setTimeout(function() {
-                            window.location.href = "../views/closedDay.php";
-                        }, 2000);
-                    } else {
-                        $(".alert").removeClass("alert-success").addClass("alert-danger");
+                        if (response[0] === '201') {
+                            $(".alert").removeClass("alert-danger").addClass("alert-success");
+                            
+                            setTimeout(function() {
+                                window.location.href = "../views/closedDay.php";
+                            }, 1000);
+                        } else {
+                            $(".alert").removeClass("alert-success").addClass("alert-danger");
+                        }
                     }
-                }
-            });
+                });
+            }
         };
         return false;
     });
@@ -123,44 +126,51 @@ $(document).ready(function(){
     $("#form-create-offDay").unbind().submit(function(){
         let employeeId = $("#offDayEmployeeId").val();
         let description = $("#offDayDescription").val();
-        let date = new Date($("#closedDayDate").val());
-        
-        const currentData = new Date();
-        
-        date.setHours(0, 0, 0, 0)
-        currentData.setHours(0, 0, 0, 0)  
+        let date = $("#offDayDate").val(); 
+
+        alert(!employeeId)
+        alert(!date)
 
         if (!employeeId || !date) {
             $(".alert").removeClass("alert-success").addClass("alert-danger");
             $(".alert").text("Existem campos de preenchimento obrigatório por preencher!");
             $(".alert").show();
-        } else if (currentData > date){
-            $(".alert").removeClass("alert-success").addClass("alert-danger");
-            $(".alert").text("A data não deve ser inferior à data atual!");
-            $(".alert").show();
         } else {
-            $.ajax({
-                url: "../handlers/createOffDayHandler.php",
-                type: "POST",
-                data: {employeeId, description, date},
-                dataType: "html",
-                success: function(response) {
+            date = new Date(date);
+        
+            const currentData = new Date();
+            
+            date.setHours(0, 0, 0, 0)
+            currentData.setHours(0, 0, 0, 0) 
+    
+            if (currentData > date){
+                $(".alert").removeClass("alert-success").addClass("alert-danger");
+                $(".alert").text("A data não deve ser inferior à data atual!");
+                $(".alert").show();
+            } else {
+                $.ajax({
+                    url: "../handlers/createOffDayHandler.php",
+                    type: "POST",
+                    data: {employeeId, description, date: $("#offDayDate").val()},
+                    dataType: "html",
+                    success: function(response) {
 
-                    response = response.split(' - ');                    
-                    $(".alert").text(response[1]);
-                    $(".alert").show();
+                        response = response.split(' - ');                    
+                        $(".alert").text(response[1]);
+                        $(".alert").show();
 
-                    if (response[0] === '201') {
-                        $(".alert").removeClass("alert-danger").addClass("alert-success");
-                        
-                        setTimeout(function() {
-                            window.location.href = "../views/offDay.php";
-                        }, 2000);
-                    } else {
-                        $(".alert").removeClass("alert-success").addClass("alert-danger");
-                    }
-                }   
-            });
+                        if (response[0] === '201') {
+                            $(".alert").removeClass("alert-danger").addClass("alert-success");
+                            
+                            setTimeout(function() {
+                                window.location.href = "../views/offDay.php";
+                            }, 2000);
+                        } else {
+                            $(".alert").removeClass("alert-success").addClass("alert-danger");
+                        }
+                    }   
+                });
+            }
         };
         return false
     });
