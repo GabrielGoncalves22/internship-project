@@ -6,4 +6,7 @@ module.exports = (app) => {
 
     app.route('/schedule/employee')
         .post(app.middleware.login.requiredPermission, app.controllers.scheduleController.postEmployeeSchedule)
+
+    app.route('/schedule/all')
+        .get(app.middleware.login.requiredPermission, app.controllers.scheduleController.getAllSchedules)
 };

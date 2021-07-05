@@ -1,6 +1,18 @@
 module.exports = (app) => {
     let query, result;
 
+    const getAllSchedules = async (req, res) => {
+        try {
+            query = "Select schedules.scheduleId, schedules.description, schedules.lunchBreak, schedules.normalHours, detailsSchedules.detailsScheduleId, detailsSchedules.description, detailsSchedules.startTime, detailsSchedules.endTime, employees.employeeId, employees.name from schedules inner join employeesSchedules on schedules.scheduleId  = employeesSchedules.scheduleId inner join detailsSchedules on schedules.scheduleId = detailsSchedules.scheduleId inner join employees on employees.employeeId = employeesSchedules.employeeId where employees.entityId = ? order by employees.employeeId asc, detailsSchedules.startTime asc";
+            result = await app.config.connectionDB(query, [req.user.entityId]);
+
+            return res.status(200).send(result);
+
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    };
+
     const getSchedules = async (req, res) => {
         try {
             query = "Select schedules.scheduleId, schedules.description, schedules.lunchBreak, schedules.normalHours, detailsSchedules.detailsScheduleId, detailsSchedules.description, detailsSchedules.startTime, detailsSchedules.endTime from schedules inner join employeesSchedules on schedules.scheduleId  = employeesSchedules.scheduleId inner join detailsSchedules on schedules.scheduleId = detailsSchedules.scheduleId where employeesSchedules.employeeId = ? order by detailsSchedules.startTime asc";
@@ -51,5 +63,5 @@ module.exports = (app) => {
         }
     };
 
-    return { getSchedules, postSchedule, postEmployeeSchedule }
+    return { getAllSchedules, getSchedules, postSchedule, postEmployeeSchedule }
 };

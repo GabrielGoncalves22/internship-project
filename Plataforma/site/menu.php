@@ -14,6 +14,7 @@
                 <li><a href="../views/attendance.php" class="<?php echo (strpos($url, 'attendance.php') != false) ? "active-link" : "" ?>">Registos</a></li>
                 <li><a href="../views/closedDay.php" class="<?php echo (strpos($url, 'ClosedDay.php') != false || strpos($url, 'closedDay.php') != false) ? "active-link" : "" ?>">Dias fechados</a></li>
                 <li><a href="../views/offDay.php" class="<?php echo (strpos($url, 'OffDay.php') != false || strpos($url, 'offDay.php') != false) ? "active-link" : "" ?>">Dias de folga</a></li>
+                <li><a href="../views/schedule.php" class="<?php echo (strpos($url, 'schedule.php') != false) ? "active-link" : "" ?>">Horários</a></li>
                 <li><a href="../views/login.php" onclick = "logout()"><span class="glyphicon glyphicon-off"></span>Terminar Sessão</a></li>
             </ul>
         </article>
