@@ -1,14 +1,13 @@
-/**
- * @format
- */
-
-import 'react-native';
 import React from 'react';
-import App from '../App';
-
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import Record  from '../src/components/Record';
+import Biometric from '../src/screens/Biometric';
 
-it('renders correctly', () => {
-  renderer.create(<App />);
+it('Componente Record renderizado com sucesso!', () => {
+  renderer.create(<Record/>);
 });
+
+it('Ecrã Biometric renderizado com sucesso!', () => {
+  renderer.create(<Biometric/>);
+});
+
